@@ -14,7 +14,6 @@ TIMES_TO_TRY = 3
 RETRY_DELAY = 60
 META_FIELDS = ['_id', '_index', '_score', '_type']
 
-
 # Retry decorator for functions with exceptions
 def retry(ExceptionToCheck, tries=TIMES_TO_TRY, delay=RETRY_DELAY):
     def deco_retry(f):
@@ -113,7 +112,7 @@ class Es2csv:
 
         if '_all' not in self.opts.fields:
             search_args['_source_includes'] = self.opts.fields
-            self.csv_headers.extend([unicode(field, "utf-8") for field in self.opts.fields if '*' not in field])
+            self.csv_headers.extend([field for field in self.opts.fields if '*' not in field])
 
         if self.opts.debug_mode:
             print(('Using these indices: {}.'.format(', '.join(self.opts.index_prefixes))))
